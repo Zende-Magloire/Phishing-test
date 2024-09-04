@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Phishing Detection</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="outlook-container">
+      <div class="outlook-header">Outlook</div>
+      <div class="email-details">
+        <div
+          class="email-from"
+          data-popup="Legitimate organizations typically use a domain associated with their name. Double-check the sender's email address."
+        >
+          <p><strong>From:</strong> Example &lt;example@ex_bank.org&gt;</p>
+        </div>
+        <div class="email-to">
+          <p><strong>To:</strong> youremail@example.com</p>
+        </div>
+        <div
+          class="email-subject"
+          data-popup="Be cautious of subjects that create urgency or panic. Phishers often use this tactic."
+        >
+          <p>
+            <strong>Subject:</strong> Urgent: Your Account Has Been Suspended!
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="email-greeting"
+        data-popup="Phishing emails often use vague greetings like 'Dear Customer.' A legitimate email from your bank would typically use your full name."
+      >
+        <p>Dear Employee,</p>
+      </div>
+
+      <div class="email-content">
+        <p>
+          We have detected unusual activity on your account. For your safety, we
+          have temporarily suspended your account.
+        </p>
+        <div
+          class="email-link"
+          data-popup="Always check the URL before clicking. Hover over the link to see the actual URL. If it looks suspicious, don't click."
+        >
+          <p>
+            To restore access, please click the link below and verify your
+            identity:
+          </p>
+          <p>
+            <a href="http://example.com/restore-access"
+              >http://ex.com/restore-access</a
+            >
+          </p>
+        </div>
+        <p>Sincerely,<br />Ex Team</p>
+      </div>
+
+      <div
+        class="email-footer"
+        data-popup="Attachments can contain malware. Only open attachments if you're sure they are safe and from a legitimate source."
+      >
+        <p><strong>Attachments:</strong> Account_Suspension_Details.pdf</p>
+      </div>
+    </div>
+
+    <div class="popup-box" id="popup-box">
+      <p id="popup-question">Is this element safe or spam?</p>
+      <button onclick="handleAnswer('safe')">Safe</button>
+      <button onclick="handleAnswer('spam')">Spam</button>
+      <button onclick="showHelp()">Help Me</button>
+      <div class="help-text" id="help-text">
+        <p></p>
+      </div>
+    </div>
+
+    <script>
+      let steps = document.querySelectorAll(
+        ".email-from, .email-subject, .email-greeting, .email-link, .email-footer"
+      );
+      let currentStep = 0;
+      let popupBox = document.getElementById("popup-box");
+      let helpText = document.getElementById("help-text");
+      let popupText = document.getElementById("popup-question");
+
+      function showPopup() {
+        let element = steps[currentStep];
+        let rect = element.getBoundingClientRect();
+        popupBox.style.top = `${window.scrollY + rect.top}px`;
+        popupBox.style.left = `${rect.left + rect.width + 10}px`;
+        popupBox.style.display = "block";
+        helpText.style.display = "none";
+
+        element.classList.add("highlight");
+      }
+
+      function handleAnswer(answer) {
+        let element = steps[currentStep];
+        let feedback = "";
+
+        if (element.classList.contains("email-from")) {
+          if (answer === "safe") {
+            feedback =
+              "Incorrect. The sender's email address contains an underscore ('_'), while the EX's email domain contains a dash ('-') (example@ex-bank.org).";
+          } else {
+            feedback =
+              "Correct. The sender's email address contains an underscore ('_'), while the EX's email domain contains a dash ('-') (example@ex-bank.org).";
+          }
+        } else if (element.classList.contains("email-subject")) {
+          if (answer === "safe") {
+            feedback =
+              "Incorrect. The subject tries to create panic. This is a common phishing tactic.";
+          } else {
+            feedback =
+              "Correct. The subject tries to create panic. This is a common phishing tactic.";
+          }
+        } else if (element.classList.contains("email-greeting")) {
+          if (answer === "safe") {
+            feedback =
+              "Incorrect. The greeting is vague. Legitimate emails usually use your name.";
+          } else {
+            feedback =
+              "Correct. The vague greeting is a red flag, indicating a possible phishing attempt.";
+          }
+        } else if (element.classList.contains("email-link")) {
+          if (answer === "safe") {
+            feedback =
+              "Correct. The link seems okay, but always hover to check the actual URL before clicking.";
+          } else {
+            feedback =
+              "Incorrect. The link seems okay, but always hover to check the actual URL before clicking.";
+          }
+        } else if (element.classList.contains("email-footer")) {
+          if (answer === "safe") {
+            feedback =
+              "Correct. Attachments in suspicious emails can contain malware, so only open them if you're sure they're from a trusted source.";
+          } else {
+            feedback =
+              "Incorrect. Attachments in suspicious emails can contain malware, so only open them if you're sure they're from a trusted source.";
+          }
+        }
+
+        alert(feedback);
+
+        element.classList.remove("highlight");
+
+        currentStep++;
+        if (currentStep < steps.length) {
+          showPopup();
+        } else {
+          alert("You have completed the phishing email test!");
+        }
+      }
+
+      function showHelp() {
+        let element = steps[currentStep];
+        let popupMessage = element.getAttribute("data-popup");
+        helpText.querySelector("p").innerText = popupMessage;
+        helpText.style.display = "block";
+      }
+
+      showPopup();
+    </script>
+  </body>
+</html>

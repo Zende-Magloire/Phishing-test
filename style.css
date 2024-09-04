@@ -1,0 +1,95 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f3f2f1;
+    margin: 0;
+    padding: 0;
+}
+
+.outlook-container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+}
+
+.outlook-header {
+    background-color: #0078d4;
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-bottom: 2px solid #005a9e;
+}
+
+.email-details {
+    margin-top: 20px;
+}
+
+.email-details p {
+    margin: 8px 0;
+}
+
+.email-from, .email-to, .email-subject, .email-greeting, .email-link {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.email-content {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #f8f8f8;
+    position: relative;
+}
+
+.email-footer {
+    padding: 20px;
+    background-color: #f3f2f1;
+    position: relative;
+}
+
+.highlight {
+    background-color: #ffffcc;
+    border: 1px solid #ffc107;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.popup-box {
+    display: none;
+    position: absolute;
+    background-color: #0078d4;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000;
+    font-size: 14px;
+    width: 300px;
+}
+
+.popup-box button {
+    background-color: #005a9e;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.popup-box button:hover {
+    background-color: #004080;
+}
+
+.help-text {
+    margin-top: 10px;
+    background-color: #eef;
+    padding: 10px;
+    border-left: 4px solid #0078d4;
+    display: none;
+    color: #333;
+}
